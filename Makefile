@@ -1,4 +1,4 @@
-.PHONY: build clean deploy
+.PHONY: build clean deploy run
 
 build:
 	mkdir -p {Chrome,Firefox}/data
@@ -16,3 +16,6 @@ deploy: build
 	mv Chrome/destinyreddit.zip .
 	$(MAKE) -C Firefox xpi
 	mv Firefox/destinyreddit.xpi .
+
+run:
+	$(MAKE) -C Firefox $@

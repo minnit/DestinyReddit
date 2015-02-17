@@ -1,12 +1,16 @@
 {
     "name": "DestinyReddit",
     "description": "Improve the readability of /r/DestinyTheGame & /r/Fireteams",
-    "version":"0.0.1",
+    "version":"0.0.2",
     "manifest_version":2,
     "content_scripts": [
         {
             "matches": ["*://*.reddit.com/*"],
-            "js": ["data/destinyreddit.js"]
+            "js": [
+                "data/jquery-2.1.3.min.js",
+                "data/URI.min.js",
+                "data/destinyreddit.js"
+            ]
         }
     ],
     "web_accessible_resources": [

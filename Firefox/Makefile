@@ -1,6 +1,7 @@
 .PHONY: build run test xpi install
 
-build: data/destinyreddit.js
+build:
+	$(MAKE) -C .. $@
 
 run: build test
 	cfx run --profiledir=./profile

@@ -28,6 +28,18 @@
     }
 
     var sr = currentSubreddit().toLowerCase();
+    var uri = new URI();
+
+    function active() {
+        var dr = uri.search(true).dr;
+        if (! dr) {
+            return true;
+        }
+        if (dr === "false") {
+            return false
+        }
+        return true;
+    }
 
     function removeStyles() {
         var tgt = document.querySelector('link[title=applied_subreddit_stylesheet]');
@@ -42,7 +54,9 @@
         if (sr === "destinythegame") {
             [].forEach.call(document.querySelectorAll("p.title a.title"), function(item) {
                 var title = item.innerHTML;
-                title = title.replace(/\s*\[(?:question|guide|misc|media|discussion)\]\s*/gi, "");
+                // Here is the tag list:
+                // https://www.reddit.com/r/DestinyTheGame/wiki/rules#wiki_10._all_posts_must_include_a_required_tag
+                title = title.replace(/\s*\[(?:discussion|question|guide|lore|media|suggestion|misc|news)\]\s*/gi, "");
                 item.text = title;
             });
         }
@@ -60,34 +74,36 @@
         }
     }
 
-    if (isFirefox()) {
-        self.port.emit("ready", sr);
+    if (active()) {
+        if (isFirefox()) {
+            self.port.emit("ready", sr);
 
-        self.port.on("onStart", function(options) {
-            onStart(options);
-        });
+            self.port.on("onStart", function(options) {
+                onStart(options);
+            });
 
-        self.port.on("onReady", function(options) {
-            onReady();
-        });
-    } else if (isChrome()) {
-        if (sr === "fireteams") {
-            var path = chrome.extension.getURL('data/fireteams.css');
+            self.port.on("onReady", function(options) {
+                onReady();
+            });
+        } else if (isChrome()) {
+            if (sr === "fireteams") {
+                var path = chrome.extension.getURL('data/fireteams.css');
 
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', path, true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-                    var options = {};
-                    options.css = xhr.responseText;
-                    onStart(options);
-                    onReady();
-                }
-            };
-            xhr.send();
-        } else {
-            onStart({});
-            onReady();
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', path, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                        var options = {};
+                        options.css = xhr.responseText;
+                        onStart(options);
+                        onReady();
+                    }
+                };
+                xhr.send();
+            } else {
+                onStart({});
+                onReady();
+            }
         }
     }
 })();
