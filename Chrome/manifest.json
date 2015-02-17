@@ -1,0 +1,20 @@
+{
+    "name": "DestinyReddit",
+    "description": "Improve the readability of /r/DestinyTheGame & /r/Fireteams",
+    "version":"0.0.1",
+    "manifest_version":2,
+    "content_scripts": [
+        {
+            "matches": ["*://*.reddit.com/*"],
+            "js": ["data/destinyreddit.js"]
+        }
+    ],
+    "web_accessible_resources": [
+        "data/fireteams.css"
+    ],
+    "icons": {
+        "16": "icon16.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+    }
+}

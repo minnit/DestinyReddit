@@ -1,0 +1,12 @@
+{
+  "name": "destinyreddit",
+  "title": "DestinyReddit",
+  "id": "jid1-aMssXxOwAqTedA",
+  "description": "Improve the readability of /r/DestinyTheGame & /r/Fireteams",
+  "author": "",
+  "license": "MPL 2.0",
+  "version": "0.0.1",
+  "permissions": {
+      "private-browsing": true
+  }
+}
