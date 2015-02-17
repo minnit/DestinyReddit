@@ -7,14 +7,15 @@
         {
             "matches": ["*://*.reddit.com/*"],
             "js": [
-                "data/jquery-2.1.3.min.js",
-                "data/URI.min.js",
-                "data/destinyreddit.js"
+                "data/common/jquery-2.1.3.min.js",
+                "data/common/URI.min.js",
+                "data/common/destinyreddit.js",
+                "data/page.js"
             ]
         }
     ],
     "web_accessible_resources": [
-        "data/fireteams.css"
+        "data/common/fireteams.css"
     ],
     "icons": {
         "16": "icon16.png",
