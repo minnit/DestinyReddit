@@ -1,4 +1,8 @@
+var __DestinyReddit__ = {};
+
 (function(){
+
+    var DR = __DestinyReddit__;
 
     function isChrome() {
         return typeof chrome !== 'undefined';
@@ -9,7 +13,7 @@
     }
 
     subredditMatch = /^https?:\/\/(?:[\-\w\.]+\.)?reddit\.com\/r\/([\w\.\+]+)/i;
-    function currentSubreddit() {
+    DR.currentSubreddit = function() {
         var match = location.href.match(subredditMatch);
         if (match !== null) {
             return match[1];
@@ -17,7 +21,7 @@
         return "";
     }
 
-    function addStyle(css) {
+    DR.addStyle = function(css) {
         var style = document.createElement('style');
         style.textContent = css;
         var head = document.getElementsByTagName('head')[0];
@@ -27,10 +31,13 @@
         }
     }
 
-    var sr = currentSubreddit().toLowerCase();
-    var uri = new URI();
+    var sr = DR.currentSubreddit().toLowerCase();
+    DR.sr = sr;
 
-    function active() {
+    var uri = new URI();
+    DR.uri = uri;
+
+    DR.active = function() {
         var dr = uri.search(true).dr;
         if (! dr) {
             return true;
@@ -41,7 +48,7 @@
         return true;
     }
 
-    function removeStyles() {
+    DR.removeStyles = function() {
         var tgt = document.querySelector('link[title=applied_subreddit_stylesheet]');
         if (!tgt) tgt = this.head.querySelector('style[title=applied_subreddit_stylesheet]');
         if (!tgt) tgt = this.head.querySelector('style[data-apng-original-href]'); // apng extension fix (see #1076)
@@ -50,7 +57,7 @@
         }
     }
 
-    function onReady() {
+    DR.onReady = function() {
         if (sr === "destinythegame") {
             [].forEach.call(document.querySelectorAll("p.title a.title"), function(item) {
                 var title = item.innerHTML;
@@ -62,46 +69,19 @@
         }
     }
 
-    function onStart(options) {
+    DR.onStart = function(options) {
         if (sr === "destinythegame") {
-            removeStyles();
+            DR.removeStyles();
         } else if (sr === "fireteams") {
-            removeStyles();
+            DR.removeStyles();
         }
 
         if (options && options.css) {
-            addStyle(options.css);
+            DR.addStyle(options.css);
         }
 
         $(document).ready(function(){
-            onReady();
+            DR.onReady();
         });
-    }
-
-    if (active()) {
-        if (isFirefox()) {
-            self.port.emit("ready", sr);
-
-            self.port.on("onStart", function(options) {
-                onStart(options);
-            });
-        } else if (isChrome()) {
-            var options = {};
-            if (sr === "fireteams") {
-                var path = chrome.extension.getURL('data/fireteams.css');
-
-                var xhr = new XMLHttpRequest();
-                xhr.open('GET', path, true);
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-                        options.css = xhr.responseText;
-                        onStart(options);
-                    }
-                };
-                xhr.send();
-            } else {
-                onStart(options);
-            }
-        }
     }
 })();

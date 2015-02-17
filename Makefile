@@ -4,12 +4,12 @@ run:
 	$(MAKE) -C Firefox $@
 
 build:
-	mkdir -p {Chrome,Firefox}/data
-	gcp -al common/*{.js,.css} Firefox/data/
-	gcp -al common/*{.js,.css} Chrome/data/
+	mkdir -p {Chrome,Firefox}/data/common/
+	gcp -al common/*{.js,.css} Firefox/data/common/
+	gcp -al common/*{.js,.css} Chrome/data/common/
 
 clean:
-	rm -rf {Chrome,Firefox}/data
+	rm -rf {Chrome,Firefox}/data/common/
 	rm -rf Firefox/profile
 	rm -f destinyreddit.zip
 	rm -f destinyreddit.xpi

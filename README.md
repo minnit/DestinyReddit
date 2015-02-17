@@ -10,4 +10,4 @@ https://addons.mozilla.org/en-US/firefox/addon/destinyreddit
 
 To install, open up your Extensions window and drag the `destinyreddit.crx` file onto it
 
-https://github.com/minnit/DestinyReddit/releases/download/0.0.1/destinyreddit.crx
+https://github.com/minnit/DestinyReddit/releases/download/0.0.2/destinyreddit.crx
