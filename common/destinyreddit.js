@@ -72,6 +72,10 @@
         if (options && options.css) {
             addStyle(options.css);
         }
+
+        $(document).ready(function(){
+            onReady();
+        });
     }
 
     if (active()) {
@@ -81,11 +85,8 @@
             self.port.on("onStart", function(options) {
                 onStart(options);
             });
-
-            self.port.on("onReady", function(options) {
-                onReady();
-            });
         } else if (isChrome()) {
+            var options = {};
             if (sr === "fireteams") {
                 var path = chrome.extension.getURL('data/fireteams.css');
 
@@ -93,16 +94,13 @@
                 xhr.open('GET', path, true);
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-                        var options = {};
                         options.css = xhr.responseText;
                         onStart(options);
-                        onReady();
                     }
                 };
                 xhr.send();
             } else {
-                onStart({});
-                onReady();
+                onStart(options);
             }
         }
     }

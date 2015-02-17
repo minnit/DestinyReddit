@@ -19,20 +19,3 @@ pageMod.PageMod({
         });
     }
 });
-
-pageMod.PageMod({
-    include: "*.reddit.com",
-    contentScriptFile: [
-        data.url("jquery-2.1.3.min.js"),
-        data.url("URI.min.js"),
-        data.url("destinyreddit.js")
-    ],
-    contentScriptWhen: "ready",
-    onAttach: function(worker) {
-        worker.port.on("ready", function(sr) {
-            var options = {};
-            worker.port.emit("onReady", options);
-        });
-    }
-});
-

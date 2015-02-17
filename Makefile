@@ -1,5 +1,8 @@
 .PHONY: build clean deploy run
 
+run:
+	$(MAKE) -C Firefox $@
+
 build:
 	mkdir -p {Chrome,Firefox}/data
 	gcp -al common/*{.js,.css} Firefox/data/
@@ -16,6 +19,3 @@ deploy: build
 	mv Chrome/destinyreddit.zip .
 	$(MAKE) -C Firefox xpi
 	mv Firefox/destinyreddit.xpi .
-
-run:
-	$(MAKE) -C Firefox $@
